@@ -82,23 +82,15 @@ function addNewRow(formData) {
 }
 
 function generatePDF(data) {
-  const blob = Utilities.newBlob(
-    getPrintHTML(data),
-    'text/html',
-    'form.html'
-  );
-  const pdfBlob = blob.getAs('application/pdf');
-  const base64 = Utilities.base64Encode(pdfBlob.getBytes());
-  return base64;
-}
-
-function getPrintHTML(data) {
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
     <style>
+      @font-face {
+        font-family: 'NotoSansThai';
+        src: url('https://fonts.gstatic.com/s/notosansthai/v25/iJWnBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofpAtgv.woff2') format('woff2');
+      }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Sarabun', sans-serif; font-size: 13px; color: #000; padding: 32px 40px; }
-      h2 { text-align: center; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+      body { font-family: 'NotoSansThai', 'Tahoma', sans-serif; font-size: 13px; color: #000; padding: 32px 40px; }
+      h2 { text-align: center; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
       .sub { text-align: center; font-size: 12px; color: #555; margin-bottom: 32px; }
       .section { margin-bottom: 24px; }
       .row { display: flex; gap: 20px; margin-top: 10px; }
@@ -174,6 +166,10 @@ function getPrintHTML(data) {
     </div>
 
   </body></html>`;
+
+  const blob = Utilities.newBlob(html, 'text/html', 'form.html');
+  const pdfBlob = blob.getAs('application/pdf');
+  return Utilities.base64Encode(pdfBlob.getBytes());
 }
 
 function getReportData(month, year) {
