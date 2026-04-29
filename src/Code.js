@@ -81,6 +81,101 @@ function addNewRow(formData) {
   return "บันทึกข้อมูลสำเร็จ!";
 }
 
+function generatePDF(data) {
+  const blob = Utilities.newBlob(
+    getPrintHTML(data),
+    'text/html',
+    'form.html'
+  );
+  const pdfBlob = blob.getAs('application/pdf');
+  const base64 = Utilities.base64Encode(pdfBlob.getBytes());
+  return base64;
+}
+
+function getPrintHTML(data) {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Sarabun', sans-serif; font-size: 13px; color: #000; padding: 32px 40px; }
+      h2 { text-align: center; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+      .sub { text-align: center; font-size: 12px; color: #555; margin-bottom: 32px; }
+      .section { margin-bottom: 24px; }
+      .row { display: flex; gap: 20px; margin-top: 10px; }
+      .field { flex: 1; }
+      .field-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+      .field-value { border-bottom: 1px solid #ccc; padding-bottom: 5px; min-height: 24px; font-size: 13px; }
+      .stitle { font-size: 11px; font-weight: 600; background: #f0f0f0; padding: 5px 10px; border-left: 3px solid #1a3a5c; letter-spacing: 0.5px; text-transform: uppercase; color: #444; }
+      .cb-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+      .cb-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+      .cb { width: 13px; height: 13px; border: 1px solid #555; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+      .sign-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 48px; }
+      .sign-box { text-align: center; }
+      .sign-line { border-bottom: 1px solid #555; margin: 60px 10px 8px; }
+      .sign-label { font-size: 11px; color: #555; }
+      .sign-date { font-size: 11px; color: #888; margin-top: 6px; }
+    </style></head><body>
+
+    <h2>แบบฟอร์มสำหรับกรอกข้อมูลลูกค้าเข้าระบบ SMARTSOFT</h2>
+    <div class="sub">ประจำปี 2026</div>
+
+    <div class="section">
+      <div class="stitle">ข้อมูลลูกค้า</div>
+      <div class="row">
+        <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.cv_code || ""}</div></div>
+        <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้า</div><div class="field-value">${data.customer_name || ""}</div></div>
+        <div class="field"><div class="field-label">ประเภทลูกค้า</div><div class="field-value">${data.customer_type || ""}</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stitle">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
+      <div class="row">
+        <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.ref_cv_code || ""}</div></div>
+        <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้าบัญชีหลัก</div><div class="field-value">${data.ref_customer_name || ""}</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stitle">พื้นที่การขาย</div>
+      <div class="row">
+        <div class="field"><div class="field-label">ภาค</div><div class="field-value">${data.region_name || ""}</div></div>
+        <div class="field"><div class="field-label">เขตการขาย</div><div class="field-value">${data.area_name || ""}</div></div>
+        <div class="field"><div class="field-label">จังหวัด</div><div class="field-value">${data.province_name || ""}</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stitle">ช่องทางการรับเอกสาร</div>
+      <div class="cb-list">
+        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("ไปรษณีย์") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์</div>
+        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("Line Chat") ? "✓" : ""}</div> จัดส่งผ่าน Line Chat</div>
+        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("E-mail") ? "✓" : ""}</div> จัดส่งผ่าน E-mail ${data.doc_email_address ? `(${data.doc_email_address})` : ""}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stitle">พนักงานขาย</div>
+      <div class="row">
+        <div class="field"><div class="field-label">ชื่อพนักงานขาย</div><div class="field-value">${data.created_by || ""}</div></div>
+      </div>
+    </div>
+
+    ${data.remark ? `
+    <div class="section">
+      <div class="stitle">หมายเหตุ</div>
+      <div style="font-size:13px; padding: 8px 0;">${data.remark}</div>
+    </div>` : ""}
+
+    <div class="sign-row">
+      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้กรอกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้อนุมัติ)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้บันทึกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+    </div>
+
+  </body></html>`;
+}
+
 function getReportData(month, year) {
   const ss = SpreadsheetApp.openById("1RI0-awz98-Qq8JmMgn_q3--XqDf1JUZjFhM7XtmaYHM");
   const sheet = ss.getSheetByName("customer");
@@ -112,18 +207,9 @@ function getReportData(month, year) {
     bySales[sales].count++;
   });
 
-  const regionArr = Object.entries(byRegion)
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-
-  const typeArr = Object.entries(byType)
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-
-  const salesArr = Object.entries(bySales)
-    .map(([name, val]) => ({ name, count: val.count, area: val.area }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10);
+  const regionArr = Object.entries(byRegion).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  const typeArr = Object.entries(byType).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  const salesArr = Object.entries(bySales).map(([name, val]) => ({ name, count: val.count, area: val.area })).sort((a, b) => b.count - a.count).slice(0, 10);
 
   return {
     total: filtered.length,

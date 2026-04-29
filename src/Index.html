@@ -76,8 +76,6 @@
       .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 4px; }
       .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
-      .form-group { margin-bottom: 0; }
-
       label {
         display: block;
         font-size: 11px;
@@ -106,7 +104,7 @@
       textarea {
         padding: 8px 10px;
         resize: vertical;
-        min-height: 72px;
+        min-height: 160px;
         height: auto;
       }
 
@@ -225,6 +223,7 @@
       }
 
       .btn-outline:hover { background: #f0f4f8; }
+      .btn-outline:disabled { opacity: 0.5; cursor: not-allowed; }
 
       @media (max-width: 700px) {
         .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
@@ -248,15 +247,15 @@
 
         <div class="section-label">ข้อมูลลูกค้า</div>
         <div class="grid-3">
-          <div class="form-group">
+          <div>
             <label>CV Code</label>
             <input type="text" id="cv_code" placeholder="เช่น CV001">
           </div>
-          <div class="form-group">
+          <div>
             <label class="required">ชื่อลูกค้า</label>
             <input type="text" id="customer_name" placeholder="ชื่อร้าน / บริษัท">
           </div>
-          <div class="form-group">
+          <div>
             <label class="required">ประเภทลูกค้า <span class="tag">Type</span></label>
             <select id="customer_type">
               <option value="">กำลังโหลด...</option>
@@ -266,11 +265,11 @@
 
         <div class="section-label">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
         <div class="grid-2">
-          <div class="form-group">
+          <div>
             <label>CV Code</label>
             <input type="text" id="ref_cv_code" placeholder="เช่น CV001">
           </div>
-          <div class="form-group">
+          <div>
             <label>ชื่อลูกค้าบัญชีหลัก</label>
             <input type="text" id="ref_customer_name" placeholder="ชื่อร้าน / บริษัท">
           </div>
@@ -278,28 +277,28 @@
 
         <div class="section-label">พื้นที่การขาย</div>
         <div class="grid-4">
-          <div class="form-group">
+          <div>
             <label class="required">ภาค <span class="tag">Region</span></label>
             <select id="region" onchange="filterArea()">
               <option value="">กำลังโหลด...</option>
             </select>
           </div>
-          <div class="form-group">
+          <div>
             <label class="required">กลุ่มเขต <span class="tag">Sub</span></label>
             <select id="sub_region" onchange="filterSalesArea()" disabled>
-              <option value="">เลือกภาคก่อน</option>
+              <option value="">เลือกกลุ่มเขต</option>
             </select>
           </div>
-          <div class="form-group">
+          <div>
             <label class="required">เขตการขาย <span class="tag">Area</span></label>
             <select id="sales_area" onchange="filterProvince()" disabled>
-              <option value="">เลือกกลุ่มเขตก่อน</option>
+              <option value="">เลือกเขตการขาย</option>
             </select>
           </div>
-          <div class="form-group">
+          <div>
             <label class="required">จังหวัด</label>
             <select id="province" disabled>
-              <option value="">เลือกเขตก่อน</option>
+              <option value="">เลือกจังหวัด</option>
             </select>
           </div>
         </div>
@@ -311,12 +310,8 @@
             <div class="section-label" style="margin-top:0;">ช่องทางการรับเอกสาร</div>
             <div class="cb-list">
               <label class="cb-row">
-                <input type="checkbox" id="doc_registered">
-                <span>จัดส่งทางไปรษณีย์ (ลงทะเบียน)</span>
-              </label>
-              <label class="cb-row">
-                <input type="checkbox" id="doc_ems">
-                <span>จัดส่งทางไปรษณีย์ (EMS)</span>
+                <input type="checkbox" id="doc_post">
+                <span>จัดส่งทางไปรษณีย์</span>
               </label>
               <label class="cb-row">
                 <input type="checkbox" id="doc_line">
@@ -330,24 +325,25 @@
                 <input type="email" id="doc_email_address" placeholder="ระบุ E-mail">
               </div>
             </div>
+
+            <div class="section-label">พนักงานขาย</div>
+            <div>
+              <label class="required">ชื่อพนักงานขาย</label>
+              <input type="text" id="created_by" placeholder="เลือกเขตการขายก่อน" readonly>
+            </div>
           </div>
 
           <div>
-            <div class="section-label" style="margin-top:0;">พนักงานขาย & หมายเหตุ</div>
-            <div class="form-group" style="margin-bottom:10px;">
-              <label>หมายเหตุ</label>
+            <div class="section-label" style="margin-top:0;">หมายเหตุ</div>
+            <div>
               <textarea id="remark" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
-            </div>
-            <div class="form-group">
-              <label class="required">พนักงานขาย</label>
-              <input type="text" id="created_by" placeholder="เลือกเขตการขายก่อน" readonly>
             </div>
           </div>
         </div>
 
         <div class="btn-row">
           <button class="btn-primary" id="submitBtn" onclick="submitData()">บันทึกข้อมูล</button>
-          <button class="btn-outline" onclick="printForm()">พิมพ์แบบฟอร์ม</button>
+          <button class="btn-outline" id="printBtn" onclick="printForm()">พิมพ์แบบฟอร์ม</button>
         </div>
 
       </div>
@@ -411,11 +407,11 @@
         const area = document.getElementById("sales_area");
         const province = document.getElementById("province");
 
-        subRegion.innerHTML = '<option value="">เลือกภาคก่อน</option>';
+        subRegion.innerHTML = '<option value="">เลือกกลุ่มเขต</option>';
         subRegion.disabled = true;
-        area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+        area.innerHTML = '<option value="">เลือกเขตการขาย</option>';
         area.disabled = true;
-        province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+        province.innerHTML = '<option value="">เลือกจังหวัด</option>';
         province.disabled = true;
         document.getElementById("created_by").value = "";
 
@@ -440,12 +436,12 @@
         const area = document.getElementById("sales_area");
         const province = document.getElementById("province");
 
-        province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+        province.innerHTML = '<option value="">เลือกจังหวัด</option>';
         province.disabled = true;
         document.getElementById("created_by").value = "";
 
         if (!subRegionCode) {
-          area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+          area.innerHTML = '<option value="">เลือกเขตการขาย</option>';
           area.disabled = true;
           return;
         }
@@ -463,7 +459,7 @@
         const province = document.getElementById("province");
 
         if (!areaCode) {
-          province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+          province.innerHTML = '<option value="">เลือกจังหวัด</option>';
           province.disabled = true;
           document.getElementById("created_by").value = "";
           return;
@@ -498,8 +494,7 @@
           created_by: document.getElementById("created_by").value,
           remark: document.getElementById("remark").value,
           doc_channels: [
-            document.getElementById("doc_registered").checked ? "ไปรษณีย์ลงทะเบียน" : "",
-            document.getElementById("doc_ems").checked ? "EMS" : "",
+            document.getElementById("doc_post").checked ? "ไปรษณีย์" : "",
             document.getElementById("doc_line").checked ? "Line Chat" : "",
             document.getElementById("doc_email").checked ? "E-mail" : ""
           ].filter(Boolean).join(", "),
@@ -531,14 +526,24 @@
         google.script.run
           .withSuccessHandler(function(res) {
             showToast(res || "บันทึกสำเร็จ", "success", function() {
-              resetForm();
-              btn.disabled = false;
-              btn.innerText = "บันทึกข้อมูล";
-              const pw = window.open("", "_blank");
-              pw.document.write(generatePrintHTML(formData));
-              pw.document.close();
-              pw.focus();
-              pw.print();
+              btn.innerText = "กำลังสร้าง PDF...";
+              google.script.run
+                .withSuccessHandler(function(base64) {
+                  const link = document.createElement("a");
+                  link.href = "data:application/pdf;base64," + base64;
+                  link.download = "แบบฟอร์มลูกค้า_" + (formData.customer_name || "ไม่ระบุ") + ".pdf";
+                  link.click();
+                  resetForm();
+                  btn.disabled = false;
+                  btn.innerText = "บันทึกข้อมูล";
+                })
+                .withFailureHandler(function(err) {
+                  showToast("สร้าง PDF ไม่สำเร็จ: " + err.message, "error");
+                  resetForm();
+                  btn.disabled = false;
+                  btn.innerText = "บันทึกข้อมูล";
+                })
+                .generatePDF(formData);
             });
           })
           .withFailureHandler(function(err) {
@@ -560,85 +565,33 @@
         document.getElementById("province").innerHTML = '<option value="">เลือกเขตก่อน</option>';
         document.getElementById("province").disabled = true;
         document.getElementById("created_by").value = "";
-        document.getElementById("doc_registered").checked = false;
-        document.getElementById("doc_ems").checked = false;
-        document.getElementById("doc_email").checked = false;
+        document.getElementById("doc_post").checked = false;
         document.getElementById("doc_line").checked = false;
+        document.getElementById("doc_email").checked = false;
         document.getElementById("doc_email_address").value = "";
         document.getElementById("email_input").style.display = "none";
       }
 
       function printForm() {
         const data = getFormData();
-        const pw = window.open("", "_blank");
-        pw.document.write(generatePrintHTML(data));
-        pw.document.close();
-        pw.focus();
-        pw.print();
-      }
-
-      function generatePrintHTML(data) {
-        return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-          <style>
-            @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap');
-            * { box-sizing: border-box; margin: 0; padding: 0; }
-            body { font-family: 'Sarabun', sans-serif; font-size: 13px; color: #000; padding: 24px 32px; }
-            h2 { text-align: center; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-            .sub { text-align: center; font-size: 12px; color: #555; margin-bottom: 20px; }
-            .row { display: flex; gap: 16px; margin-bottom: 10px; }
-            .field { flex: 1; }
-            .field-label { font-size: 11px; color: #888; margin-bottom: 3px; }
-            .field-value { border-bottom: 1px solid #ccc; padding-bottom: 4px; min-height: 22px; font-size: 13px; }
-            .stitle { font-size: 12px; font-weight: 600; background: #f0f0f0; padding: 4px 8px; margin: 14px 0 8px; border-left: 3px solid #1a3a5c; }
-            .cb-list { display: flex; flex-direction: column; gap: 6px; }
-            .cb-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
-            .cb { width: 12px; height: 12px; border: 1px solid #555; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
-            .sign-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
-            .sign-box { text-align: center; }
-            .sign-line { border-bottom: 1px solid #555; margin: 50px 10px 6px; }
-            .sign-label { font-size: 11px; color: #555; }
-            .sign-date { font-size: 11px; color: #888; margin-top: 4px; }
-            @media print { body { padding: 10px 20px; } }
-          </style></head><body>
-          <h2>แบบฟอร์มสำหรับกรอกข้อมูลลูกค้าเข้าระบบ SMARTSOFT</h2>
-          <div class="sub">ประจำปี 2026</div>
-
-          <div class="stitle">ข้อมูลลูกค้า</div>
-          <div class="row">
-            <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.cv_code || ""}</div></div>
-            <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้า</div><div class="field-value">${data.customer_name || ""}</div></div>
-            <div class="field"><div class="field-label">ประเภทลูกค้า</div><div class="field-value">${data.customer_type || ""}</div></div>
-          </div>
-
-          <div class="stitle">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
-          <div class="row">
-            <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.ref_cv_code || ""}</div></div>
-            <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้าบัญชีหลัก</div><div class="field-value">${data.ref_customer_name || ""}</div></div>
-          </div>
-
-          <div class="stitle">พื้นที่การขาย</div>
-          <div class="row">
-            <div class="field"><div class="field-label">ภาค</div><div class="field-value">${data.region_name || ""}</div></div>
-            <div class="field"><div class="field-label">เขตการขาย</div><div class="field-value">${data.area_name || ""}</div></div>
-            <div class="field"><div class="field-label">จังหวัด</div><div class="field-value">${data.province_name || ""}</div></div>
-          </div>
-
-          <div class="stitle">ช่องทางการรับเอกสาร</div>
-          <div class="cb-list">
-            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("ไปรษณีย์ลงทะเบียน") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์ (ลงทะเบียน)</div>
-            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("EMS") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์ (EMS)</div>
-            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("Line Chat") ? "✓" : ""}</div> จัดส่งผ่าน Line Chat</div>
-            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("E-mail") ? "✓" : ""}</div> จัดส่งผ่าน E-mail ${data.doc_email_address ? `(${data.doc_email_address})` : ""}</div>
-          </div>
-
-          ${data.remark ? `<div class="stitle">หมายเหตุ</div><div style="font-size:13px;padding:4px 0;">${data.remark}</div>` : ""}
-
-          <div class="sign-row">
-            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้กรอกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้อนุมัติ)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้บันทึกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-          </div>
-        </body></html>`;
+        const btn = document.getElementById("printBtn");
+        btn.disabled = true;
+        btn.innerText = "กำลังสร้าง PDF...";
+        google.script.run
+          .withSuccessHandler(function(base64) {
+            const link = document.createElement("a");
+            link.href = "data:application/pdf;base64," + base64;
+            link.download = "แบบฟอร์มลูกค้า_" + (data.customer_name || "ไม่ระบุ") + ".pdf";
+            link.click();
+            btn.disabled = false;
+            btn.innerText = "พิมพ์แบบฟอร์ม";
+          })
+          .withFailureHandler(function(err) {
+            showToast("สร้าง PDF ไม่สำเร็จ: " + err.message, "error");
+            btn.disabled = false;
+            btn.innerText = "พิมพ์แบบฟอร์ม";
+          })
+          .generatePDF(data);
       }
     </script>
   </body>
