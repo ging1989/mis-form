@@ -82,94 +82,41 @@ function addNewRow(formData) {
 }
 
 function generatePDF(data) {
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-    <style>
-      @font-face {
-        font-family: 'NotoSansThai';
-        src: url('https://fonts.gstatic.com/s/notosansthai/v25/iJWnBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofpAtgv.woff2') format('woff2');
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'NotoSansThai', 'Tahoma', sans-serif; font-size: 13px; color: #000; padding: 32px 40px; }
-      h2 { text-align: center; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-      .sub { text-align: center; font-size: 12px; color: #555; margin-bottom: 32px; }
-      .section { margin-bottom: 24px; }
-      .row { display: flex; gap: 20px; margin-top: 10px; }
-      .field { flex: 1; }
-      .field-label { font-size: 11px; color: #888; margin-bottom: 4px; }
-      .field-value { border-bottom: 1px solid #ccc; padding-bottom: 5px; min-height: 24px; font-size: 13px; }
-      .stitle { font-size: 11px; font-weight: 600; background: #f0f0f0; padding: 5px 10px; border-left: 3px solid #1a3a5c; letter-spacing: 0.5px; text-transform: uppercase; color: #444; }
-      .cb-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-      .cb-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-      .cb { width: 13px; height: 13px; border: 1px solid #555; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
-      .sign-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 48px; }
-      .sign-box { text-align: center; }
-      .sign-line { border-bottom: 1px solid #555; margin: 60px 10px 8px; }
-      .sign-label { font-size: 11px; color: #555; }
-      .sign-date { font-size: 11px; color: #888; margin-top: 6px; }
-    </style></head><body>
+  const templateId = "1z5rf-TGd71Echn9PMdOLQ57LbpADMkPIpcXKGyJzom8";
 
-    <h2>แบบฟอร์มสำหรับกรอกข้อมูลลูกค้าเข้าระบบ SMARTSOFT</h2>
-    <div class="sub">ประจำปี 2026</div>
+  // copy template
+  const copyFile = DriveApp.getFileById(templateId).makeCopy("temp_form_" + new Date().getTime());
+  const copyId = copyFile.getId();
+  const doc = DocumentApp.openById(copyId);
+  const body = doc.getBody();
 
-    <div class="section">
-      <div class="stitle">ข้อมูลลูกค้า</div>
-      <div class="row">
-        <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.cv_code || ""}</div></div>
-        <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้า</div><div class="field-value">${data.customer_name || ""}</div></div>
-        <div class="field"><div class="field-label">ประเภทลูกค้า</div><div class="field-value">${data.customer_type || ""}</div></div>
-      </div>
-    </div>
+  // replace placeholder
+  body.replaceText("\\{\\{cv_code\\}\\}", data.cv_code || "");
+  body.replaceText("\\{\\{cv_name\\}\\}", data.customer_name || "");
+  body.replaceText("\\{\\{customer_type\\}\\}", data.customer_type || "");
+  body.replaceText("\\{\\{ref_cv_code\\}\\}", data.ref_cv_code || "");
+  body.replaceText("\\{\\{ref_customer\\}\\}", data.ref_customer_name || "");
+  body.replaceText("\\{\\{region\\}\\}", data.region_name || "");
+  body.replaceText("\\{\\{sub_region\\}\\}", data.sub_region_name || "");
+  body.replaceText("\\{\\{sales_area\\}\\}", data.area_name || "");
+  body.replaceText("\\{\\{province\\}\\}", data.province_name || "");
+  body.replaceText("\\{\\{mail\\}\\}", data.doc_channels?.includes("ไปรษณีย์") ? "☑" : "☐");
+  body.replaceText("\\{\\{line\\}\\}", data.doc_channels?.includes("Line Chat") ? "☑" : "☐");
+  body.replaceText("\\{\\{email\\}\\}", data.doc_channels?.includes("E-mail") ? "☑" : "☐");
+  body.replaceText("\\{\\{doc_email\\}\\}", data.doc_email_address || "");
+  body.replaceText("\\{\\{created_by\\}\\}", data.created_by || "");
+  body.replaceText("\\{\\{remark\\}\\}", data.remark || "");
 
-    <div class="section">
-      <div class="stitle">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
-      <div class="row">
-        <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.ref_cv_code || ""}</div></div>
-        <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้าบัญชีหลัก</div><div class="field-value">${data.ref_customer_name || ""}</div></div>
-      </div>
-    </div>
+  doc.saveAndClose();
 
-    <div class="section">
-      <div class="stitle">พื้นที่การขาย</div>
-      <div class="row">
-        <div class="field"><div class="field-label">ภาค</div><div class="field-value">${data.region_name || ""}</div></div>
-        <div class="field"><div class="field-label">เขตการขาย</div><div class="field-value">${data.area_name || ""}</div></div>
-        <div class="field"><div class="field-label">จังหวัด</div><div class="field-value">${data.province_name || ""}</div></div>
-      </div>
-    </div>
+  // export PDF
+  const pdfBlob = DriveApp.getFileById(copyId).getAs('application/pdf');
+  const base64 = Utilities.base64Encode(pdfBlob.getBytes());
 
-    <div class="section">
-      <div class="stitle">ช่องทางการรับเอกสาร</div>
-      <div class="cb-list">
-        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("ไปรษณีย์") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์</div>
-        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("Line Chat") ? "✓" : ""}</div> จัดส่งผ่าน Line Chat</div>
-        <div class="cb-row"><div class="cb">${data.doc_channels?.includes("E-mail") ? "✓" : ""}</div> จัดส่งผ่าน E-mail ${data.doc_email_address ? `(${data.doc_email_address})` : ""}</div>
-      </div>
-    </div>
+  // ลบ copy ทิ้ง
+  DriveApp.getFileById(copyId).setTrashed(true);
 
-    <div class="section">
-      <div class="stitle">พนักงานขาย</div>
-      <div class="row">
-        <div class="field"><div class="field-label">ชื่อพนักงานขาย</div><div class="field-value">${data.created_by || ""}</div></div>
-      </div>
-    </div>
-
-    ${data.remark ? `
-    <div class="section">
-      <div class="stitle">หมายเหตุ</div>
-      <div style="font-size:13px; padding: 8px 0;">${data.remark}</div>
-    </div>` : ""}
-
-    <div class="sign-row">
-      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้กรอกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้อนุมัติ)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-      <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้บันทึกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
-    </div>
-
-  </body></html>`;
-
-  const blob = Utilities.newBlob(html, 'text/html', 'form.html');
-  const pdfBlob = blob.getAs('application/pdf');
-  return Utilities.base64Encode(pdfBlob.getBytes());
+  return base64;
 }
 
 function getReportData(month, year) {
@@ -179,7 +126,8 @@ function getReportData(month, year) {
 
   const filtered = data.slice(1).filter(row => {
     if (!row[0]) return false;
-    const d = new Date(row[0]);
+    const parts = String(row[0]).split("/");
+    const d = new Date(+parts[2], +parts[1] - 1, +parts[0]);
     return d.getMonth() + 1 === month && d.getFullYear() === year;
   });
 

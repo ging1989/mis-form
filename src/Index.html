@@ -480,15 +480,17 @@
         const areaCode = document.getElementById("sales_area").value;
         const provinceCode = document.getElementById("province").value;
         const regionCode = document.getElementById("region").value;
+        const subRegionCode = document.getElementById("sub_region").value;
 
         return {
           cv_code: document.getElementById("cv_code").value,
           customer_name: document.getElementById("customer_name").value,
           ref_cv_code: document.getElementById("ref_cv_code").value,
           ref_customer_name: document.getElementById("ref_customer_name").value,
-          customer_type: document.getElementById("customer_type").value,
+          customer_type: masterData.customerTypes?.find(t => t.code == document.getElementById("customer_type").value)?.name || document.getElementById("customer_type").value,
           region_code: regionCode,
           region_name: masterData.regions?.find(r => r.code == regionCode)?.name || "",
+          sub_region_name: masterData.subRegions?.find(s => s.code == subRegionCode)?.name || "",
           area_name: masterData.areas?.find(a => a.code == areaCode)?.name || "",
           province_name: masterData.provinces?.find(p => p.code == provinceCode && String(p.area_code).trim() == String(areaCode).trim())?.name || "",
           created_by: document.getElementById("created_by").value,
@@ -573,6 +575,19 @@
       }
 
       function printForm() {
+        const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
+        for (let id of required) {
+          if (!document.getElementById(id).value) {
+            showToast("กรุณากรอกข้อมูลให้ครบก่อนพิมพ์", "error");
+            return;
+          }
+        }
+
+        if (document.getElementById("doc_email").checked && !document.getElementById("doc_email_address").value) {
+          showToast("กรุณาระบุ E-mail สำหรับจัดส่งเอกสาร", "error");
+          return;
+        }
+
         const data = getFormData();
         const btn = document.getElementById("printBtn");
         btn.disabled = true;
