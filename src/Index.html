@@ -9,228 +9,227 @@
       body {
         font-family: 'Sarabun', sans-serif;
         background-color: #f0f4f8;
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
         min-height: 100vh;
       }
 
       .card {
-        background: #ffffff;
-        border-radius: 16px;
-        max-width: 600px;
+        background: #fff;
+        border-radius: 14px;
+        max-width: 960px;
         margin: 0 auto;
         overflow: hidden;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
       }
 
       .card-header {
         background: #1a3a5c;
-        padding: 1.5rem 2rem;
+        padding: 1rem 1.5rem;
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
 
       .logo-circle {
-        width: 42px; height: 42px;
+        width: 36px; height: 36px;
         border-radius: 50%;
         background: rgba(255,255,255,0.15);
         display: flex; align-items: center; justify-content: center;
         font-family: 'Prompt', sans-serif;
         font-weight: 600;
-        font-size: 13px;
+        font-size: 11px;
         color: #fff;
         flex-shrink: 0;
       }
 
       .header-text h1 {
         font-family: 'Prompt', sans-serif;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 500;
         color: #fff;
-        line-height: 1.3;
       }
 
       .header-text p {
-        font-size: 12px;
-        color: rgba(255,255,255,0.6);
+        font-size: 11px;
+        color: rgba(255,255,255,0.55);
         margin-top: 2px;
       }
 
-      .card-body { padding: 2rem; }
+      .card-body { padding: 1.5rem; }
 
       .section-label {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 600;
-        color: #888;
-        letter-spacing: 1px;
+        color: #999;
+        letter-spacing: 0.8px;
         text-transform: uppercase;
-        margin-bottom: 1rem;
-        padding-bottom: 6px;
+        margin-top: 1.25rem;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
         border-bottom: 1px solid #f0f0f0;
       }
 
-      .form-group { margin-bottom: 1.25rem; }
+      .section-label:first-of-type { margin-top: 0; }
 
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 12px;
-        margin-bottom: 1.25rem;
-      }
+      .grid-3 { display: grid; grid-template-columns: 0.8fr 1.6fr 1.4fr; gap: 10px; margin-bottom: 4px; }
+      .grid-2 { display: grid; grid-template-columns: 0.8fr 2fr; gap: 10px; margin-bottom: 4px; }
+      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 4px; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+      .form-group { margin-bottom: 0; }
 
       label {
         display: block;
-        font-size: 13px;
-        color: #555;
-        margin-bottom: 6px;
+        font-size: 11px;
+        color: #666;
+        margin-bottom: 4px;
       }
 
-      .required::after {
-        content: ' *';
-        color: #e24b4a;
-      }
+      .required::after { content: ' *'; color: #e24b4a; }
 
-      input, select, textarea {
+      input[type="text"], input[type="email"], select, textarea {
         width: 100%;
-        padding: 0 12px;
         font-family: 'Sarabun', sans-serif;
-        font-size: 14px;
+        font-size: 13px;
         color: #222;
         background: #f8f9fb;
         border: 1px solid #e2e6ea;
-        border-radius: 8px;
+        border-radius: 7px;
         outline: none;
         transition: border-color 0.15s, box-shadow 0.15s;
         appearance: none;
         -webkit-appearance: none;
       }
 
-      input, select { height: 40px; }
+      input[type="text"], input[type="email"], select { height: 32px; padding: 0 10px; }
 
       textarea {
-        padding: 10px 12px;
+        padding: 8px 10px;
         resize: vertical;
-        min-height: 80px;
+        min-height: 72px;
         height: auto;
       }
 
       select {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 12px center;
+        background-position: right 10px center;
         background-color: #f8f9fb;
-        padding-right: 32px;
+        padding-right: 28px;
       }
 
-      select:disabled { opacity: 0.45; cursor: not-allowed; }
+      select:disabled { opacity: 0.4; cursor: not-allowed; }
 
       input:focus, select:focus, textarea:focus {
         border-color: #378add;
-        box-shadow: 0 0 0 3px rgba(55,138,221,0.12);
+        box-shadow: 0 0 0 3px rgba(55,138,221,0.1);
         background: #fff;
       }
 
       input[readonly] {
         background: #f0f0f0;
         cursor: not-allowed;
-        color: #888;
+        color: #999;
       }
 
-      .cascade-group {
-        background: #f8f9fb;
-        border-radius: 10px;
-        padding: 1rem 1.25rem;
-        margin-bottom: 1.25rem;
-        border: 1px solid #eef0f3;
-      }
-
-      .cascade-group .form-group { margin-bottom: 0.9rem; }
-      .cascade-group .form-group:last-child { margin-bottom: 0; }
+      .divider { height: 1px; background: #f0f0f0; margin: 1.25rem 0; }
 
       .tag {
         display: inline-block;
-        font-size: 11px;
-        padding: 2px 8px;
-        border-radius: 4px;
+        font-size: 9px;
+        padding: 1px 5px;
+        border-radius: 3px;
         background: #e8f0fb;
         color: #378add;
-        margin-left: 6px;
+        margin-left: 3px;
         vertical-align: middle;
       }
 
-      .divider {
-        height: 1px;
-        background: #f0f0f0;
-        margin: 1.5rem 0;
+      .cb-list { display: flex; flex-direction: column; gap: 8px; }
+
+      .cb-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
       }
+
+      .cb-row input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+        accent-color: #1a3a5c;
+      }
+
+      .cb-row span { font-size: 12px; color: #555; }
+
+      #email_input { margin-left: 21px; margin-top: 4px; }
 
       .toast {
         position: fixed;
         top: 20px;
         right: 20px;
         display: none;
-        padding: 14px 18px;
+        padding: 12px 16px;
         border-radius: 10px;
-        font-size: 14px;
-        min-width: 220px;
-        text-align: left;
+        font-size: 13px;
+        min-width: 200px;
         z-index: 9999;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        animation: slideIn 0.3s ease;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       }
 
       @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateX(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
       }
 
       @keyframes fadeOut {
-        from {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateX(30px);
-        }
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(30px); }
       }
 
-      .toast.error {
-        background: #fef0f0;
-        color: #e24b4a;
-        border: 1px solid #fbd0d0;
-      }
+      .toast.error { background: #fef0f0; color: #e24b4a; border: 1px solid #fbd0d0; }
+      .toast.success { background: #f0faf4; color: #2e7d52; border: 1px solid #c3e6d0; }
 
-      .toast.success {
-        background: #f0faf4;
-        color: #2e7d52;
-        border: 1px solid #c3e6d0;
-      }
+      .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 1.25rem; }
 
-      .submit-btn {
-        width: 100%;
-        height: 46px;
+      .btn-primary {
+        height: 38px;
         background: #1a3a5c;
         color: #fff;
         border: none;
-        border-radius: 10px;
+        border-radius: 8px;
         font-family: 'Prompt', sans-serif;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 500;
         cursor: pointer;
-        transition: background 0.15s, transform 0.1s;
-        margin-top: 0.5rem;
+        transition: background 0.15s;
       }
 
-      .submit-btn:hover { background: #24507d; }
-      .submit-btn:active { transform: scale(0.99); }
-      .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+      .btn-primary:hover { background: #24507d; }
+      .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+
+      .btn-outline {
+        height: 38px;
+        background: #fff;
+        color: #1a3a5c;
+        border: 1px solid #1a3a5c;
+        border-radius: 8px;
+        font-family: 'Prompt', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .btn-outline:hover { background: #f0f4f8; }
+
+      @media (max-width: 700px) {
+        .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+        .two-col, .grid-2 { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
 
@@ -245,12 +244,10 @@
       </div>
 
       <div class="card-body">
-
         <div id="toast" class="toast"></div>
 
-        <p class="section-label">ข้อมูลลูกค้า</p>
-
-        <div class="form-row">
+        <div class="section-label">ข้อมูลลูกค้า</div>
+        <div class="grid-3">
           <div class="form-group">
             <label>CV Code</label>
             <input type="text" id="cv_code" placeholder="เช่น CV001">
@@ -259,19 +256,16 @@
             <label class="required">ชื่อลูกค้า</label>
             <input type="text" id="customer_name" placeholder="ชื่อร้าน / บริษัท">
           </div>
+          <div class="form-group">
+            <label class="required">ประเภทลูกค้า <span class="tag">Type</span></label>
+            <select id="customer_type">
+              <option value="">กำลังโหลด...</option>
+            </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="required">ประเภทลูกค้า <span class="tag">Customer Type</span></label>
-          <select id="customer_type">
-            <option value="">กำลังโหลดข้อมูล...</option>
-          </select>
-        </div>
-
-        <div class="divider"></div>
-        <p class="section-label">ข้อมูลลูกค้าบัญชีหลัก (ถ้ามี)</p>
-
-        <div class="form-row">
+        <div class="section-label">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
+        <div class="grid-2">
           <div class="form-group">
             <label>CV Code</label>
             <input type="text" id="ref_cv_code" placeholder="เช่น CV001">
@@ -282,244 +276,370 @@
           </div>
         </div>
 
-        <div class="divider"></div>
-        <p class="section-label">พื้นที่การขาย</p>
-
-        <div class="cascade-group">
+        <div class="section-label">พื้นที่การขาย</div>
+        <div class="grid-4">
           <div class="form-group">
             <label class="required">ภาค <span class="tag">Region</span></label>
             <select id="region" onchange="filterArea()">
-              <option value="">กำลังโหลดข้อมูล...</option>
+              <option value="">กำลังโหลด...</option>
             </select>
           </div>
-
-        <div class="form-group">
-          <label class="required">กลุ่มเขต <span class="tag">Sub Region</span></label>
-          <select id="sub_region" onchange="filterSalesArea()" disabled>
-            <option value="">เลือกภาคก่อน</option>
-          </select>
-      </div>
-
           <div class="form-group">
-            <label class="required">เขตการขาย <span class="tag">Sales Area</span></label>
-            <select id="sales_area" onchange="filterProvince()" disabled>
+            <label class="required">กลุ่มเขต <span class="tag">Sub</span></label>
+            <select id="sub_region" onchange="filterSalesArea()" disabled>
               <option value="">เลือกภาคก่อน</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label class="required">จังหวัด <span class="tag">Province</span></label>
+            <label class="required">เขตการขาย <span class="tag">Area</span></label>
+            <select id="sales_area" onchange="filterProvince()" disabled>
+              <option value="">เลือกกลุ่มเขตก่อน</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="required">จังหวัด</label>
             <select id="province" disabled>
-              <option value="">เลือกเขตการขายก่อน</option>
+              <option value="">เลือกเขตก่อน</option>
             </select>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>หมายเหตุ</label>
-          <textarea id="remark" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
-        </div>
-
         <div class="divider"></div>
-        <p class="section-label">พนักงานขาย</p>
 
-        <div class="form-group">
-          <label class="required">พนักงานขาย</label>
-          <input type="text" id="created_by" placeholder="เลือกเขตการขายก่อน" readonly>
+        <div class="two-col">
+          <div>
+            <div class="section-label" style="margin-top:0;">ช่องทางการรับเอกสาร</div>
+            <div class="cb-list">
+              <label class="cb-row">
+                <input type="checkbox" id="doc_registered">
+                <span>จัดส่งทางไปรษณีย์ (ลงทะเบียน)</span>
+              </label>
+              <label class="cb-row">
+                <input type="checkbox" id="doc_ems">
+                <span>จัดส่งทางไปรษณีย์ (EMS)</span>
+              </label>
+              <label class="cb-row">
+                <input type="checkbox" id="doc_line">
+                <span>จัดส่งผ่าน Line Chat</span>
+              </label>
+              <label class="cb-row">
+                <input type="checkbox" id="doc_email" onchange="toggleEmail()">
+                <span>จัดส่งผ่าน E-mail</span>
+              </label>
+              <div id="email_input" style="display:none;">
+                <input type="email" id="doc_email_address" placeholder="ระบุ E-mail">
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-label" style="margin-top:0;">พนักงานขาย & หมายเหตุ</div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>หมายเหตุ</label>
+              <textarea id="remark" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="required">พนักงานขาย</label>
+              <input type="text" id="created_by" placeholder="เลือกเขตการขายก่อน" readonly>
+            </div>
+          </div>
         </div>
 
-        <button class="submit-btn" id="submitBtn" onclick="submitData()">บันทึกข้อมูล</button>
+        <div class="btn-row">
+          <button class="btn-primary" id="submitBtn" onclick="submitData()">บันทึกข้อมูล</button>
+          <button class="btn-outline" onclick="printForm()">พิมพ์แบบฟอร์ม</button>
+        </div>
 
       </div>
     </div>
 
-  <script>
-  let masterData = {};
+    <script>
+      let masterData = {};
 
-  function showToast(message, type, callback) {
-    const toast = document.getElementById("toast");
-
-    toast.className = "toast " + type;
-    toast.innerHTML = message;
-    toast.style.display = "block";
-
-    toast.style.animation = "none";
-    toast.offsetHeight;
-
-    toast.style.animation = "slideIn 0.6s ease forwards";
-
-    setTimeout(() => {
-      toast.style.animation = "fadeOut 0.8s ease forwards";
-
-      setTimeout(() => {
-        toast.style.display = "none";
-        if (callback) callback();
-      }, 400);
-    }, 2500);
-  }
-
-    window.onload = function() {
-    google.script.run
-      .withSuccessHandler(function(data) {
-        masterData = data;
-        populateAll();
-      })
-      .withFailureHandler(function(err) {
-        showToast("โหลดข้อมูลไม่สำเร็จ", "error");
-      })
-      .getMasterData();
-  };
-
-  function populateAll() {
-    const region = document.getElementById("region");
-    region.innerHTML = '<option value="">เลือกภาค</option>';
-    masterData.regions?.forEach(r => {
-      region.innerHTML += `<option value="${r.code}">${r.name}</option>`;
-    });
-
-    const type = document.getElementById("customer_type");
-    type.innerHTML = '<option value="">เลือกประเภทลูกค้า</option>';
-    masterData.customerTypes?.forEach(t => {
-      type.innerHTML += `<option value="${t.code}">${t.name}</option>`;
-    });
-  }
-
-  function filterArea() {
-  const regionCode = document.getElementById("region").value;
-  const subRegion = document.getElementById("sub_region");
-  const area = document.getElementById("sales_area");
-  const province = document.getElementById("province");
-
-  subRegion.innerHTML = '<option value="">เลือกภาคก่อน</option>';
-  subRegion.disabled = true;
-  area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
-  area.disabled = true;
-  province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
-  province.disabled = true;
-  document.getElementById("created_by").value = "";
-
-  if (!regionCode) return;
-
-  const filtered = masterData.subRegions?.filter(s => s.region_code == regionCode);
-
-  if (filtered.length === 1) {
-    subRegion.innerHTML = `<option value="${filtered[0].code}">${filtered[0].name}</option>`;
-    subRegion.disabled = true;
-    filterSalesArea(filtered[0].code);
-  } else {
-    subRegion.innerHTML = '<option value="">เลือกกลุ่มเขต</option>';
-    filtered?.forEach(s => {
-      subRegion.innerHTML += `<option value="${s.code}">${s.name}</option>`;
-    });
-    subRegion.disabled = false;
-  }
-}
-
-  function filterSalesArea(autoCode) {
-    const subRegionCode = autoCode || document.getElementById("sub_region").value;
-    const area = document.getElementById("sales_area");
-    const province = document.getElementById("province");
-
-    province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
-    province.disabled = true;
-    document.getElementById("created_by").value = "";
-
-    if (!subRegionCode) {
-      area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
-      area.disabled = true;
-      return;
-    }
-
-    const filtered = masterData.areas?.filter(a => a.sub_region_code == subRegionCode);
-    area.innerHTML = '<option value="">เลือกเขตการขาย</option>';
-    filtered?.forEach(a => {
-      area.innerHTML += `<option value="${a.code}">${a.name}</option>`;
-    });
-    area.disabled = false;
-  }
-
-  function filterProvince() {
-    const areaCode = document.getElementById("sales_area").value;
-    const province = document.getElementById("province");
-
-    if (!areaCode) {
-      province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
-      province.disabled = true;
-      document.getElementById("created_by").value = "";
-      return;
-    }
-
-    const filtered = masterData.provinces?.filter(p => String(p.area_code).trim() == String(areaCode).trim());
-    province.innerHTML = '<option value="">เลือกจังหวัด</option>';
-    filtered?.forEach(p => {
-      province.innerHTML += `<option value="${p.code}">${p.name}</option>`;
-    });
-    province.disabled = false;
-
-    const salesperson = masterData.salespersons?.find(s => String(s.area_code).trim() == String(areaCode).trim());
-    document.getElementById("created_by").value = salesperson ? salesperson.name : "";
-  }
-
-  function submitData() {
-    const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
-    for (let id of required) {
-      if (!document.getElementById(id).value) {
-        showToast("กรุณากรอกข้อมูลให้ครบทุกช่อง", "error");
-        return;
+      function showToast(message, type, callback) {
+        const toast = document.getElementById("toast");
+        toast.className = "toast " + type;
+        toast.innerHTML = message;
+        toast.style.display = "block";
+        toast.style.animation = "none";
+        toast.offsetHeight;
+        toast.style.animation = "slideIn 0.6s ease forwards";
+        setTimeout(() => {
+          toast.style.animation = "fadeOut 0.8s ease forwards";
+          setTimeout(() => {
+            toast.style.display = "none";
+            if (callback) callback();
+          }, 400);
+        }, 2500);
       }
-    }
 
-    const btn = document.getElementById("submitBtn");
-    btn.disabled = true;
-    btn.innerText = "กำลังบันทึกข้อมูล...";
+      function toggleEmail() {
+        const checked = document.getElementById("doc_email").checked;
+        document.getElementById("email_input").style.display = checked ? "block" : "none";
+        if (!checked) document.getElementById("doc_email_address").value = "";
+      }
 
-    const regionCode = document.getElementById("region").value;
-    const areaCode = document.getElementById("sales_area").value;
-    const provinceCode = document.getElementById("province").value;
+      window.onload = function() {
+        google.script.run
+          .withSuccessHandler(function(data) {
+            masterData = data;
+            populateAll();
+          })
+          .withFailureHandler(function(err) {
+            showToast("โหลดข้อมูลไม่สำเร็จ", "error");
+          })
+          .getMasterData();
+      };
 
-    const formData = {
-      cv_code: document.getElementById("cv_code").value,
-      customer_name: document.getElementById("customer_name").value,
-      ref_cv_code: document.getElementById("ref_cv_code").value,
-      ref_customer_name: document.getElementById("ref_customer_name").value,
-      customer_type: document.getElementById("customer_type").value,
-      region_code: regionCode,
-      area_name: masterData.areas.find(a => a.code == areaCode)?.name || "",
-      province_name: masterData.provinces.find(p => p.code == provinceCode && String(p.area_code).trim() == String(areaCode).trim())?.name || "",
-      created_by: document.getElementById("created_by").value,
-      remark: document.getElementById("remark").value
-    };
-
-    google.script.run
-      .withSuccessHandler(function(res) {
-        showToast(res || "บันทึกสำเร็จ", "success", function() {
-          resetForm();
-          btn.disabled = false;
-          btn.innerText = "บันทึกข้อมูล";
+      function populateAll() {
+        const region = document.getElementById("region");
+        region.innerHTML = '<option value="">เลือกภาค</option>';
+        masterData.regions?.forEach(r => {
+          region.innerHTML += `<option value="${r.code}">${r.name}</option>`;
         });
-      })
-      .withFailureHandler(function(err) {
-        showToast("เกิดข้อผิดพลาด: " + err.message, "error");
-        btn.disabled = false;
-        btn.innerText = "บันทึกข้อมูล";
-      })
-      .addNewRow(formData);
-  }
 
-  function resetForm() {
-    document.querySelectorAll("input, textarea").forEach(el => el.value = "");
-    document.getElementById("customer_type").value = "";
-    document.getElementById("region").value = "";
-    document.getElementById("sub_region").innerHTML = '<option value="">เลือกภาคก่อน</option>'; // เพิ่ม
-    document.getElementById("sub_region").disabled = true; // เพิ่ม
-    document.getElementById("sales_area").innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
-    document.getElementById("sales_area").disabled = true;
-    document.getElementById("province").innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
-    document.getElementById("province").disabled = true;
-    document.getElementById("created_by").value = "";
-  }
+        const type = document.getElementById("customer_type");
+        type.innerHTML = '<option value="">เลือกประเภทลูกค้า</option>';
+        masterData.customerTypes?.forEach(t => {
+          type.innerHTML += `<option value="${t.code}">${t.name}</option>`;
+        });
+      }
 
-</script>
+      function filterArea() {
+        const regionCode = document.getElementById("region").value;
+        const subRegion = document.getElementById("sub_region");
+        const area = document.getElementById("sales_area");
+        const province = document.getElementById("province");
 
+        subRegion.innerHTML = '<option value="">เลือกภาคก่อน</option>';
+        subRegion.disabled = true;
+        area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+        area.disabled = true;
+        province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+        province.disabled = true;
+        document.getElementById("created_by").value = "";
+
+        if (!regionCode) return;
+
+        const filtered = masterData.subRegions?.filter(s => s.region_code == regionCode);
+        if (filtered.length === 1) {
+          subRegion.innerHTML = `<option value="${filtered[0].code}">${filtered[0].name}</option>`;
+          subRegion.disabled = true;
+          filterSalesArea(filtered[0].code);
+        } else {
+          subRegion.innerHTML = '<option value="">เลือกกลุ่มเขต</option>';
+          filtered?.forEach(s => {
+            subRegion.innerHTML += `<option value="${s.code}">${s.name}</option>`;
+          });
+          subRegion.disabled = false;
+        }
+      }
+
+      function filterSalesArea(autoCode) {
+        const subRegionCode = autoCode || document.getElementById("sub_region").value;
+        const area = document.getElementById("sales_area");
+        const province = document.getElementById("province");
+
+        province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+        province.disabled = true;
+        document.getElementById("created_by").value = "";
+
+        if (!subRegionCode) {
+          area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+          area.disabled = true;
+          return;
+        }
+
+        const filtered = masterData.areas?.filter(a => a.sub_region_code == subRegionCode);
+        area.innerHTML = '<option value="">เลือกเขตการขาย</option>';
+        filtered?.forEach(a => {
+          area.innerHTML += `<option value="${a.code}">${a.name}</option>`;
+        });
+        area.disabled = false;
+      }
+
+      function filterProvince() {
+        const areaCode = document.getElementById("sales_area").value;
+        const province = document.getElementById("province");
+
+        if (!areaCode) {
+          province.innerHTML = '<option value="">เลือกเขตก่อน</option>';
+          province.disabled = true;
+          document.getElementById("created_by").value = "";
+          return;
+        }
+
+        const filtered = masterData.provinces?.filter(p => String(p.area_code).trim() == String(areaCode).trim());
+        province.innerHTML = '<option value="">เลือกจังหวัด</option>';
+        filtered?.forEach(p => {
+          province.innerHTML += `<option value="${p.code}">${p.name}</option>`;
+        });
+        province.disabled = false;
+
+        const salesperson = masterData.salespersons?.find(s => String(s.area_code).trim() == String(areaCode).trim());
+        document.getElementById("created_by").value = salesperson ? salesperson.name : "";
+      }
+
+      function getFormData() {
+        const areaCode = document.getElementById("sales_area").value;
+        const provinceCode = document.getElementById("province").value;
+        const regionCode = document.getElementById("region").value;
+
+        return {
+          cv_code: document.getElementById("cv_code").value,
+          customer_name: document.getElementById("customer_name").value,
+          ref_cv_code: document.getElementById("ref_cv_code").value,
+          ref_customer_name: document.getElementById("ref_customer_name").value,
+          customer_type: document.getElementById("customer_type").value,
+          region_code: regionCode,
+          region_name: masterData.regions?.find(r => r.code == regionCode)?.name || "",
+          area_name: masterData.areas?.find(a => a.code == areaCode)?.name || "",
+          province_name: masterData.provinces?.find(p => p.code == provinceCode && String(p.area_code).trim() == String(areaCode).trim())?.name || "",
+          created_by: document.getElementById("created_by").value,
+          remark: document.getElementById("remark").value,
+          doc_channels: [
+            document.getElementById("doc_registered").checked ? "ไปรษณีย์ลงทะเบียน" : "",
+            document.getElementById("doc_ems").checked ? "EMS" : "",
+            document.getElementById("doc_line").checked ? "Line Chat" : "",
+            document.getElementById("doc_email").checked ? "E-mail" : ""
+          ].filter(Boolean).join(", "),
+          doc_email_address: document.getElementById("doc_email").checked
+            ? document.getElementById("doc_email_address").value : ""
+        };
+      }
+
+      function submitData() {
+        const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
+        for (let id of required) {
+          if (!document.getElementById(id).value) {
+            showToast("กรุณากรอกข้อมูลให้ครบทุกช่อง", "error");
+            return;
+          }
+        }
+
+        if (document.getElementById("doc_email").checked && !document.getElementById("doc_email_address").value) {
+          showToast("กรุณาระบุ E-mail สำหรับจัดส่งเอกสาร", "error");
+          return;
+        }
+
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.innerText = "กำลังบันทึก...";
+
+        const formData = getFormData();
+
+        google.script.run
+          .withSuccessHandler(function(res) {
+            showToast(res || "บันทึกสำเร็จ", "success", function() {
+              resetForm();
+              btn.disabled = false;
+              btn.innerText = "บันทึกข้อมูล";
+              const pw = window.open("", "_blank");
+              pw.document.write(generatePrintHTML(formData));
+              pw.document.close();
+              pw.focus();
+              pw.print();
+            });
+          })
+          .withFailureHandler(function(err) {
+            showToast("เกิดข้อผิดพลาด: " + err.message, "error");
+            btn.disabled = false;
+            btn.innerText = "บันทึกข้อมูล";
+          })
+          .addNewRow(formData);
+      }
+
+      function resetForm() {
+        document.querySelectorAll("input[type='text'], input[type='email'], textarea").forEach(el => el.value = "");
+        document.getElementById("customer_type").value = "";
+        document.getElementById("region").value = "";
+        document.getElementById("sub_region").innerHTML = '<option value="">เลือกภาคก่อน</option>';
+        document.getElementById("sub_region").disabled = true;
+        document.getElementById("sales_area").innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+        document.getElementById("sales_area").disabled = true;
+        document.getElementById("province").innerHTML = '<option value="">เลือกเขตก่อน</option>';
+        document.getElementById("province").disabled = true;
+        document.getElementById("created_by").value = "";
+        document.getElementById("doc_registered").checked = false;
+        document.getElementById("doc_ems").checked = false;
+        document.getElementById("doc_email").checked = false;
+        document.getElementById("doc_line").checked = false;
+        document.getElementById("doc_email_address").value = "";
+        document.getElementById("email_input").style.display = "none";
+      }
+
+      function printForm() {
+        const data = getFormData();
+        const pw = window.open("", "_blank");
+        pw.document.write(generatePrintHTML(data));
+        pw.document.close();
+        pw.focus();
+        pw.print();
+      }
+
+      function generatePrintHTML(data) {
+        return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap');
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            body { font-family: 'Sarabun', sans-serif; font-size: 13px; color: #000; padding: 24px 32px; }
+            h2 { text-align: center; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+            .sub { text-align: center; font-size: 12px; color: #555; margin-bottom: 20px; }
+            .row { display: flex; gap: 16px; margin-bottom: 10px; }
+            .field { flex: 1; }
+            .field-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+            .field-value { border-bottom: 1px solid #ccc; padding-bottom: 4px; min-height: 22px; font-size: 13px; }
+            .stitle { font-size: 12px; font-weight: 600; background: #f0f0f0; padding: 4px 8px; margin: 14px 0 8px; border-left: 3px solid #1a3a5c; }
+            .cb-list { display: flex; flex-direction: column; gap: 6px; }
+            .cb-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+            .cb { width: 12px; height: 12px; border: 1px solid #555; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+            .sign-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
+            .sign-box { text-align: center; }
+            .sign-line { border-bottom: 1px solid #555; margin: 50px 10px 6px; }
+            .sign-label { font-size: 11px; color: #555; }
+            .sign-date { font-size: 11px; color: #888; margin-top: 4px; }
+            @media print { body { padding: 10px 20px; } }
+          </style></head><body>
+          <h2>แบบฟอร์มสำหรับกรอกข้อมูลลูกค้าเข้าระบบ SMARTSOFT</h2>
+          <div class="sub">ประจำปี 2026</div>
+
+          <div class="stitle">ข้อมูลลูกค้า</div>
+          <div class="row">
+            <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.cv_code || ""}</div></div>
+            <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้า</div><div class="field-value">${data.customer_name || ""}</div></div>
+            <div class="field"><div class="field-label">ประเภทลูกค้า</div><div class="field-value">${data.customer_type || ""}</div></div>
+          </div>
+
+          <div class="stitle">ลูกค้าบัญชีหลัก (ถ้ามี)</div>
+          <div class="row">
+            <div class="field"><div class="field-label">CV Code</div><div class="field-value">${data.ref_cv_code || ""}</div></div>
+            <div class="field" style="flex:2"><div class="field-label">ชื่อลูกค้าบัญชีหลัก</div><div class="field-value">${data.ref_customer_name || ""}</div></div>
+          </div>
+
+          <div class="stitle">พื้นที่การขาย</div>
+          <div class="row">
+            <div class="field"><div class="field-label">ภาค</div><div class="field-value">${data.region_name || ""}</div></div>
+            <div class="field"><div class="field-label">เขตการขาย</div><div class="field-value">${data.area_name || ""}</div></div>
+            <div class="field"><div class="field-label">จังหวัด</div><div class="field-value">${data.province_name || ""}</div></div>
+          </div>
+
+          <div class="stitle">ช่องทางการรับเอกสาร</div>
+          <div class="cb-list">
+            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("ไปรษณีย์ลงทะเบียน") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์ (ลงทะเบียน)</div>
+            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("EMS") ? "✓" : ""}</div> จัดส่งทางไปรษณีย์ (EMS)</div>
+            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("Line Chat") ? "✓" : ""}</div> จัดส่งผ่าน Line Chat</div>
+            <div class="cb-row"><div class="cb">${data.doc_channels?.includes("E-mail") ? "✓" : ""}</div> จัดส่งผ่าน E-mail ${data.doc_email_address ? `(${data.doc_email_address})` : ""}</div>
+          </div>
+
+          ${data.remark ? `<div class="stitle">หมายเหตุ</div><div style="font-size:13px;padding:4px 0;">${data.remark}</div>` : ""}
+
+          <div class="sign-row">
+            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้กรอกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้อนุมัติ)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+            <div class="sign-box"><div class="sign-line"></div><div class="sign-label">(ผู้บันทึกข้อมูล)</div><div class="sign-date">วันที่ ......./......./.......</div></div>
+          </div>
+        </body></html>`;
+      }
+    </script>
   </body>
 </html>
