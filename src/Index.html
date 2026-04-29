@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: 'Sarabun', sans-serif;
+        background-color: #f0f4f8;
+        padding: 2rem 1rem;
+        min-height: 100vh;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 16px;
+        max-width: 600px;
+        margin: 0 auto;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      }
+
+      .card-header {
+        background: #1a3a5c;
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .logo-circle {
+        width: 42px; height: 42px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.15);
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Prompt', sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .header-text h1 {
+        font-family: 'Prompt', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        line-height: 1.3;
+      }
+
+      .header-text p {
+        font-size: 12px;
+        color: rgba(255,255,255,0.6);
+        margin-top: 2px;
+      }
+
+      .card-body { padding: 2rem; }
+
+      .section-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #888;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .form-group { margin-bottom: 1.25rem; }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 12px;
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 6px;
+      }
+
+      .required::after {
+        content: ' *';
+        color: #e24b4a;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 0 12px;
+        font-family: 'Sarabun', sans-serif;
+        font-size: 14px;
+        color: #222;
+        background: #f8f9fb;
+        border: 1px solid #e2e6ea;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      input, select { height: 40px; }
+
+      textarea {
+        padding: 10px 12px;
+        resize: vertical;
+        min-height: 80px;
+        height: auto;
+      }
+
+      select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-color: #f8f9fb;
+        padding-right: 32px;
+      }
+
+      select:disabled { opacity: 0.45; cursor: not-allowed; }
+
+      input:focus, select:focus, textarea:focus {
+        border-color: #378add;
+        box-shadow: 0 0 0 3px rgba(55,138,221,0.12);
+        background: #fff;
+      }
+
+      input[readonly] {
+        background: #f0f0f0;
+        cursor: not-allowed;
+        color: #888;
+      }
+
+      .cascade-group {
+        background: #f8f9fb;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eef0f3;
+      }
+
+      .cascade-group .form-group { margin-bottom: 0.9rem; }
+      .cascade-group .form-group:last-child { margin-bottom: 0; }
+
+      .tag {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: #e8f0fb;
+        color: #378add;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+
+      .divider {
+        height: 1px;
+        background: #f0f0f0;
+        margin: 1.5rem 0;
+      }
+
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        display: none;
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-size: 14px;
+        min-width: 220px;
+        text-align: left;
+        z-index: 9999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+      }
+
+      .toast.error {
+        background: #fef0f0;
+        color: #e24b4a;
+        border: 1px solid #fbd0d0;
+      }
+
+      .toast.success {
+        background: #f0faf4;
+        color: #2e7d52;
+        border: 1px solid #c3e6d0;
+      }
+
+      .submit-btn {
+        width: 100%;
+        height: 46px;
+        background: #1a3a5c;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: 'Prompt', sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.1s;
+        margin-top: 0.5rem;
+      }
+
+      .submit-btn:hover { background: #24507d; }
+      .submit-btn:active { transform: scale(0.99); }
+      .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="card-header">
+        <div class="logo-circle">PCG</div>
+        <div class="header-text">
+          <h1>แบบฟอร์มข้อมูลลูกค้าระบบ Smartsoft</h1>
+          <p>ประจำปี 2026</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <div id="toast" class="toast"></div>
+
+        <p class="section-label">ข้อมูลลูกค้า</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>CV Code</label>
+            <input type="text" id="cv_code" placeholder="เช่น CV001">
+          </div>
+          <div class="form-group">
+            <label class="required">ชื่อลูกค้า</label>
+            <input type="text" id="customer_name" placeholder="ชื่อร้าน / บริษัท">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required">ประเภทลูกค้า <span class="tag">Customer Type</span></label>
+          <select id="customer_type">
+            <option value="">กำลังโหลดข้อมูล...</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+        <p class="section-label">ข้อมูลลูกค้าบัญชีหลัก (ถ้ามี)</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>CV Code</label>
+            <input type="text" id="ref_cv_code" placeholder="เช่น CV001">
+          </div>
+          <div class="form-group">
+            <label>ชื่อลูกค้าบัญชีหลัก</label>
+            <input type="text" id="ref_customer_name" placeholder="ชื่อร้าน / บริษัท">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="section-label">พื้นที่การขาย</p>
+
+        <div class="cascade-group">
+          <div class="form-group">
+            <label class="required">ภาค <span class="tag">Region</span></label>
+            <select id="region" onchange="filterArea()">
+              <option value="">กำลังโหลดข้อมูล...</option>
+            </select>
+          </div>
+
+        <div class="form-group">
+          <label class="required">กลุ่มเขต <span class="tag">Sub Region</span></label>
+          <select id="sub_region" onchange="filterSalesArea()" disabled>
+            <option value="">เลือกภาคก่อน</option>
+          </select>
+      </div>
+
+          <div class="form-group">
+            <label class="required">เขตการขาย <span class="tag">Sales Area</span></label>
+            <select id="sales_area" onchange="filterProvince()" disabled>
+              <option value="">เลือกภาคก่อน</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="required">จังหวัด <span class="tag">Province</span></label>
+            <select id="province" disabled>
+              <option value="">เลือกเขตการขายก่อน</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>หมายเหตุ</label>
+          <textarea id="remark" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
+        </div>
+
+        <div class="divider"></div>
+        <p class="section-label">พนักงานขาย</p>
+
+        <div class="form-group">
+          <label class="required">พนักงานขาย</label>
+          <input type="text" id="created_by" placeholder="เลือกเขตการขายก่อน" readonly>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="submitData()">บันทึกข้อมูล</button>
+
+      </div>
+    </div>
+
+  <script>
+  let masterData = {};
+
+  function showToast(message, type, callback) {
+    const toast = document.getElementById("toast");
+
+    toast.className = "toast " + type;
+    toast.innerHTML = message;
+    toast.style.display = "block";
+
+    toast.style.animation = "none";
+    toast.offsetHeight;
+
+    toast.style.animation = "slideIn 0.6s ease forwards";
+
+    setTimeout(() => {
+      toast.style.animation = "fadeOut 0.8s ease forwards";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+        if (callback) callback();
+      }, 400);
+    }, 2500);
+  }
+
+    window.onload = function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        masterData = data;
+        populateAll();
+      })
+      .withFailureHandler(function(err) {
+        showToast("โหลดข้อมูลไม่สำเร็จ", "error");
+      })
+      .getMasterData();
+  };
+
+  function populateAll() {
+    const region = document.getElementById("region");
+    region.innerHTML = '<option value="">เลือกภาค</option>';
+    masterData.regions?.forEach(r => {
+      region.innerHTML += `<option value="${r.code}">${r.name}</option>`;
+    });
+
+    const type = document.getElementById("customer_type");
+    type.innerHTML = '<option value="">เลือกประเภทลูกค้า</option>';
+    masterData.customerTypes?.forEach(t => {
+      type.innerHTML += `<option value="${t.code}">${t.name}</option>`;
+    });
+  }
+
+  function filterArea() {
+  const regionCode = document.getElementById("region").value;
+  const subRegion = document.getElementById("sub_region");
+  const area = document.getElementById("sales_area");
+  const province = document.getElementById("province");
+
+  subRegion.innerHTML = '<option value="">เลือกภาคก่อน</option>';
+  subRegion.disabled = true;
+  area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+  area.disabled = true;
+  province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
+  province.disabled = true;
+  document.getElementById("created_by").value = "";
+
+  if (!regionCode) return;
+
+  const filtered = masterData.subRegions?.filter(s => s.region_code == regionCode);
+
+  if (filtered.length === 1) {
+    subRegion.innerHTML = `<option value="${filtered[0].code}">${filtered[0].name}</option>`;
+    subRegion.disabled = true;
+    filterSalesArea(filtered[0].code);
+  } else {
+    subRegion.innerHTML = '<option value="">เลือกกลุ่มเขต</option>';
+    filtered?.forEach(s => {
+      subRegion.innerHTML += `<option value="${s.code}">${s.name}</option>`;
+    });
+    subRegion.disabled = false;
+  }
+}
+
+  function filterSalesArea(autoCode) {
+    const subRegionCode = autoCode || document.getElementById("sub_region").value;
+    const area = document.getElementById("sales_area");
+    const province = document.getElementById("province");
+
+    province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
+    province.disabled = true;
+    document.getElementById("created_by").value = "";
+
+    if (!subRegionCode) {
+      area.innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+      area.disabled = true;
+      return;
+    }
+
+    const filtered = masterData.areas?.filter(a => a.sub_region_code == subRegionCode);
+    area.innerHTML = '<option value="">เลือกเขตการขาย</option>';
+    filtered?.forEach(a => {
+      area.innerHTML += `<option value="${a.code}">${a.name}</option>`;
+    });
+    area.disabled = false;
+  }
+
+  function filterProvince() {
+    const areaCode = document.getElementById("sales_area").value;
+    const province = document.getElementById("province");
+
+    if (!areaCode) {
+      province.innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
+      province.disabled = true;
+      document.getElementById("created_by").value = "";
+      return;
+    }
+
+    const filtered = masterData.provinces?.filter(p => String(p.area_code).trim() == String(areaCode).trim());
+    province.innerHTML = '<option value="">เลือกจังหวัด</option>';
+    filtered?.forEach(p => {
+      province.innerHTML += `<option value="${p.code}">${p.name}</option>`;
+    });
+    province.disabled = false;
+
+    const salesperson = masterData.salespersons?.find(s => String(s.area_code).trim() == String(areaCode).trim());
+    document.getElementById("created_by").value = salesperson ? salesperson.name : "";
+  }
+
+  function submitData() {
+    const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
+    for (let id of required) {
+      if (!document.getElementById(id).value) {
+        showToast("กรุณากรอกข้อมูลให้ครบทุกช่อง", "error");
+        return;
+      }
+    }
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerText = "กำลังบันทึกข้อมูล...";
+
+    const regionCode = document.getElementById("region").value;
+    const areaCode = document.getElementById("sales_area").value;
+    const provinceCode = document.getElementById("province").value;
+
+    const formData = {
+      cv_code: document.getElementById("cv_code").value,
+      customer_name: document.getElementById("customer_name").value,
+      ref_cv_code: document.getElementById("ref_cv_code").value,
+      ref_customer_name: document.getElementById("ref_customer_name").value,
+      customer_type: document.getElementById("customer_type").value,
+      region_code: regionCode,
+      area_name: masterData.areas.find(a => a.code == areaCode)?.name || "",
+      province_name: masterData.provinces.find(p => p.code == provinceCode && String(p.area_code).trim() == String(areaCode).trim())?.name || "",
+      created_by: document.getElementById("created_by").value,
+      remark: document.getElementById("remark").value
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        showToast(res || "บันทึกสำเร็จ", "success", function() {
+          resetForm();
+          btn.disabled = false;
+          btn.innerText = "บันทึกข้อมูล";
+        });
+      })
+      .withFailureHandler(function(err) {
+        showToast("เกิดข้อผิดพลาด: " + err.message, "error");
+        btn.disabled = false;
+        btn.innerText = "บันทึกข้อมูล";
+      })
+      .addNewRow(formData);
+  }
+
+  function resetForm() {
+    document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+    document.getElementById("customer_type").value = "";
+    document.getElementById("region").value = "";
+    document.getElementById("sub_region").innerHTML = '<option value="">เลือกภาคก่อน</option>'; // เพิ่ม
+    document.getElementById("sub_region").disabled = true; // เพิ่ม
+    document.getElementById("sales_area").innerHTML = '<option value="">เลือกกลุ่มเขตก่อน</option>';
+    document.getElementById("sales_area").disabled = true;
+    document.getElementById("province").innerHTML = '<option value="">เลือกเขตการขายก่อน</option>';
+    document.getElementById("province").disabled = true;
+    document.getElementById("created_by").value = "";
+  }
+
+</script>
+
+  </body>
+</html>
