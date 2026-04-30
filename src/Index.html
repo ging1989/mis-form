@@ -124,7 +124,7 @@
         background: #fff;
       }
 
-      input[readonly] {
+      input[readonly], textarea[readonly] {
         background: #f0f0f0;
         cursor: not-allowed;
         color: #999;
@@ -351,6 +351,8 @@
 
     <script>
       let masterData = {};
+      let savedFormData = null;
+      let isLocked = false;
 
       function showToast(message, type, callback) {
         const toast = document.getElementById("toast");
@@ -527,26 +529,10 @@
 
         google.script.run
           .withSuccessHandler(function(res) {
-            showToast(res || "บันทึกสำเร็จ", "success", function() {
-              btn.innerText = "กำลังสร้าง PDF...";
-              google.script.run
-                .withSuccessHandler(function(base64) {
-                  const link = document.createElement("a");
-                  link.href = "data:application/pdf;base64," + base64;
-                  link.download = "แบบฟอร์มลูกค้า_" + (formData.customer_name || "ไม่ระบุ") + ".pdf";
-                  link.click();
-                  resetForm();
-                  btn.disabled = false;
-                  btn.innerText = "บันทึกข้อมูล";
-                })
-                .withFailureHandler(function(err) {
-                  showToast("สร้าง PDF ไม่สำเร็จ: " + err.message, "error");
-                  resetForm();
-                  btn.disabled = false;
-                  btn.innerText = "บันทึกข้อมูล";
-                })
-                .generatePDF(formData);
-            });
+            showToast(res || "บันทึกสำเร็จ", "success");
+            btn.disabled = false;
+            btn.innerText = "บันทึกข้อมูล";
+            lockForm(formData);
           })
           .withFailureHandler(function(err) {
             showToast("เกิดข้อผิดพลาด: " + err.message, "error");
@@ -574,22 +560,68 @@
         document.getElementById("email_input").style.display = "none";
       }
 
+      function lockForm(data) {
+        savedFormData = data;
+        isLocked = true;
+
+        document.querySelectorAll("#cv_code, #customer_name, #ref_cv_code, #ref_customer_name, #doc_email_address, #remark").forEach(el => el.readOnly = true);
+        document.querySelectorAll("#customer_type, #region, #sub_region, #sales_area, #province").forEach(el => el.disabled = true);
+        document.querySelectorAll("#doc_post, #doc_line, #doc_email").forEach(el => el.disabled = true);
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.className = "btn-outline";
+        submitBtn.innerText = "เพิ่มลูกค้าใหม่";
+        submitBtn.onclick = unlockForm;
+        submitBtn.disabled = false;
+
+        const printBtn = document.getElementById("printBtn");
+        printBtn.className = "btn-primary";
+        printBtn.innerText = "พิมพ์เอกสาร";
+        printBtn.disabled = false;
+      }
+
+      function unlockForm() {
+        isLocked = false;
+        savedFormData = null;
+        resetForm();
+
+        document.querySelectorAll("#cv_code, #customer_name, #ref_cv_code, #ref_customer_name, #doc_email_address, #remark").forEach(el => el.readOnly = false);
+        document.querySelectorAll("#customer_type, #region").forEach(el => el.disabled = false);
+        document.querySelectorAll("#doc_post, #doc_line, #doc_email").forEach(el => el.disabled = false);
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.className = "btn-primary";
+        submitBtn.innerText = "บันทึกข้อมูล";
+        submitBtn.onclick = submitData;
+        submitBtn.disabled = false;
+
+        const printBtn = document.getElementById("printBtn");
+        printBtn.className = "btn-outline";
+        printBtn.innerText = "พิมพ์แบบฟอร์ม";
+        printBtn.disabled = false;
+      }
+
       function printForm() {
-        const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
-        for (let id of required) {
-          if (!document.getElementById(id).value) {
-            showToast("กรุณากรอกข้อมูลให้ครบก่อนพิมพ์", "error");
+        let data;
+        if (isLocked && savedFormData) {
+          data = savedFormData;
+        } else {
+          const required = ["customer_name", "customer_type", "region", "sub_region", "sales_area", "province", "created_by"];
+          for (let id of required) {
+            if (!document.getElementById(id).value) {
+              showToast("กรุณากรอกข้อมูลให้ครบก่อนพิมพ์", "error");
+              return;
+            }
+          }
+          if (document.getElementById("doc_email").checked && !document.getElementById("doc_email_address").value) {
+            showToast("กรุณาระบุ E-mail สำหรับจัดส่งเอกสาร", "error");
             return;
           }
+          data = getFormData();
         }
 
-        if (document.getElementById("doc_email").checked && !document.getElementById("doc_email_address").value) {
-          showToast("กรุณาระบุ E-mail สำหรับจัดส่งเอกสาร", "error");
-          return;
-        }
-
-        const data = getFormData();
         const btn = document.getElementById("printBtn");
+        const originalText = btn.innerText;
         btn.disabled = true;
         btn.innerText = "กำลังสร้าง PDF...";
         google.script.run
@@ -599,12 +631,12 @@
             link.download = "แบบฟอร์มลูกค้า_" + (data.customer_name || "ไม่ระบุ") + ".pdf";
             link.click();
             btn.disabled = false;
-            btn.innerText = "พิมพ์แบบฟอร์ม";
+            btn.innerText = originalText;
           })
           .withFailureHandler(function(err) {
             showToast("สร้าง PDF ไม่สำเร็จ: " + err.message, "error");
             btn.disabled = false;
-            btn.innerText = "พิมพ์แบบฟอร์ม";
+            btn.innerText = originalText;
           })
           .generatePDF(data);
       }

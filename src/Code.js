@@ -82,7 +82,8 @@ function addNewRow(formData) {
 }
 
 function generatePDF(data) {
-  const templateId = "1z5rf-TGd71Echn9PMdOLQ57LbpADMkPIpcXKGyJzom8";
+  //const templateId = "1z5rf-TGd71Echn9PMdOLQ57LbpADMkPIpcXKGyJzom8";
+  const templateId = "1EG_erNwkF0qyYwcqifQ908tzrEDem2qmZ9f3Na-9Sw0";
 
   // copy template
   const copyFile = DriveApp.getFileById(templateId).makeCopy("temp_form_" + new Date().getTime());
